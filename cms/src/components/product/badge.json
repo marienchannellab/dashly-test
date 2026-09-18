@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_product_badges",
+  "info": {
+    "displayName": "Badge",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "maxLength": 30,
+      "required": true
+    }
+  },
+  "config": {}
+}

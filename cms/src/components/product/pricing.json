@@ -1,0 +1,55 @@
+{
+  "collectionName": "components_product_pricings",
+  "info": {
+    "displayName": "Pricing",
+    "icon": "shoppingCart"
+  },
+  "options": {},
+  "attributes": {
+    "mode": {
+      "type": "enumeration",
+      "required": true,
+      "default": "none",
+      "enum": [
+        "none",
+        "percentage",
+        "fixed"
+      ]
+    },
+    "basePrice": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "discountPercent": {
+      "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "mode"
+            },
+            "percentage"
+          ]
+        }
+      },
+      "min": 0,
+      "max": 100
+    },
+    "salePrice": {
+      "type": "decimal",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "mode"
+            },
+            "fixed"
+          ]
+        }
+      },
+      "min": 0
+    }
+  },
+  "config": {}
+}

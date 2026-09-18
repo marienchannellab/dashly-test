@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_product_variation_groups",
+  "info": {
+    "displayName": "Variation Group",
+    "icon": "oneToMany"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "options": {
+      "type": "component",
+      "component": "product.variation-option",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
