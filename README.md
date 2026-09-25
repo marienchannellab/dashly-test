@@ -2,6 +2,12 @@
 
 Responsive Home Page fragment built from the supplied Figma design. The project contains a React frontend and a Strapi CMS backed by PostgreSQL.
 
+## Live deployment
+
+- Frontend: https://dashly-frontend-marienchannellab.onrender.com
+- Strapi Admin: https://dashly-strapi-marienchannellab.onrender.com/admin
+- Repository: https://github.com/marienchannellab/dashly-test
+
 ## Stack
 
 - React 19, TypeScript and Vite

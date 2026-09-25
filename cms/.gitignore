@@ -80,8 +80,8 @@ $RECYCLE.BIN/
 ssl
 .idea
 nbproject
-public/uploads/*
-!public/uploads/.gitkeep
+# Demo media is versioned so the Render deployment keeps the seeded catalog
+# images across rebuilds. Production projects should use persistent object storage.
 .tsbuildinfo
 .eslintcache
 
