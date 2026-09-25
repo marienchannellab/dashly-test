@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import type { Product } from '../types/product'
+import { STRAPI_URL } from '../config'
 
 interface ProductCardProps {
   product: Product
 }
-
-const STRAPI_URL = 'http://localhost:1337'
 
 const variationLabels: Record<string, string> = {
   Formula: 'Choose formula:',

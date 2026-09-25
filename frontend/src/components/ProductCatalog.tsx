@@ -10,23 +10,15 @@ interface ProductCatalogProps {
 }
 
 function ProductCatalog({ categories, products, eyebrow, resetKey }: ProductCatalogProps) {
-  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     categories[0]?.id ?? null,
   )
   const trackRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (categories.length === 0) {
-      setActiveCategoryId(null)
-      return
-    }
-
-    setActiveCategoryId((currentCategoryId) => (
-      categories.some((category) => category.id === currentCategoryId)
-        ? currentCategoryId
-        : categories[0].id
-    ))
-  }, [categories])
+  const activeCategoryId = categories.some(
+    (category) => category.id === selectedCategoryId,
+  )
+    ? selectedCategoryId
+    : categories[0]?.id ?? null
 
   useEffect(() => {
     if (trackRef.current) trackRef.current.scrollLeft = 0
@@ -105,7 +97,7 @@ function ProductCatalog({ categories, products, eyebrow, resetKey }: ProductCata
               role="tab"
               aria-selected={activeCategoryId === category.id}
               className={activeCategoryId === category.id ? 'product-catalog__category--active' : undefined}
-              onClick={() => setActiveCategoryId(category.id)}
+              onClick={() => setSelectedCategoryId(category.id)}
             >
               {category.name}
             </button>

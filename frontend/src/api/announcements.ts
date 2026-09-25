@@ -9,13 +9,11 @@ interface AnnouncementMessagesResponse {
   data: AnnouncementMessage[]
 }
 
-const API_URL = 'http://localhost:1337'
-
 export async function getAnnouncementMessages(): Promise<
   AnnouncementMessage[]
 > {
   const response = await fetch(
-    `${API_URL}/api/announcement-messages?sort=order:asc`,
+    `${STRAPI_URL}/api/announcement-messages?sort=order:asc`,
   )
 
   if (!response.ok) {
@@ -28,3 +26,4 @@ export async function getAnnouncementMessages(): Promise<
 
   return result.data
 }
+import { STRAPI_URL } from '../config'
