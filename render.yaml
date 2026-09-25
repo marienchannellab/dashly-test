@@ -1,0 +1,66 @@
+databases:
+  - name: dashly-postgres-marienchannellab
+    plan: free
+    region: frankfurt
+    databaseName: dashly
+    user: dashly
+
+services:
+  - type: web
+    name: dashly-strapi-marienchannellab
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: cms
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /_health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PUBLIC_URL
+        value: https://dashly-strapi-marienchannellab.onrender.com
+      - key: IS_PROXIED
+        value: true
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dashly-postgres-marienchannellab
+          property: connectionString
+      - key: DATABASE_SSL
+        value: false
+      - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+      - key: TRANSFER_TOKEN_SALT
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        generateValue: true
+
+  - type: web
+    name: dashly-frontend-marienchannellab
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: VITE_STRAPI_URL
+        value: https://dashly-strapi-marienchannellab.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
