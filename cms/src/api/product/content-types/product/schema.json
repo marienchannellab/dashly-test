@@ -49,6 +49,12 @@
       "type": "integer",
       "required": true,
       "min": 1
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "inversedBy": "products"
     }
   }
 }

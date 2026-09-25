@@ -95,18 +95,46 @@ function ProductCard({ product }: ProductCardProps) {
           aria-pressed={isFavorite}
           onClick={() => setIsFavorite((current) => !current)}
         >
-          <span aria-hidden="true">♡</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path
+              transform="translate(3 4.5)"
+              d="M13 22.5C13 22.5 0.5 15.5 0.5 7.00001C0.500254 5.49768 1.02082 4.0418 1.97318 2.8799C2.92555 1.71801 4.25093 0.921813 5.72399 0.626686C7.19705 0.331559 8.72685 0.555718 10.0533 1.26105C11.3798 1.96638 12.421 3.10935 13 4.49563C13.579 3.10936 14.6202 1.96639 15.9467 1.26106C17.2731 0.555721 18.8029 0.33156 20.276 0.626686C21.7491 0.921812 23.0745 1.71801 24.0268 2.8799C24.9792 4.0418 25.4997 5.49768 25.5 7.00001C25.5 15.5 13 22.5 13 22.5Z"
+            />
+          </svg>
         </button>
       </div>
 
-      <h2>{product.name}</h2>
-      <p>{product.size}</p>
+      <div className="product-card__title-block">
+        <h2>{product.name}</h2>
+        <p>{product.size}</p>
+      </div>
 
       <div className="product-card__variations">
         {product.variationGroups
           .toSorted((a, b) => a.order - b.order)
           .map((group) => (
-            <div key={group.id} className="product-card__variation-group">
+            <div
+              key={group.id}
+              className={`product-card__variation-group ${
+                group.name === 'Formula'
+                  ? 'product-card__variation-group--formula'
+                  : ''
+              } ${
+                ['Formula', 'Set includes', 'Choose finish'].includes(
+                  group.name,
+                )
+                  ? 'product-card__variation-group--stacked'
+                  : ''
+              } ${
+                group.name === 'Size'
+                  ? 'product-card__variation-group--size'
+                  : ''
+              } ${
+                group.name === 'Skin type'
+                  ? 'product-card__variation-group--skin-type'
+                  : ''
+              }`}
+            >
               <p>{variationLabels[group.name] ?? `${group.name}:`}</p>
 
               <div className="product-card__options">
@@ -177,6 +205,21 @@ function ProductCard({ product }: ProductCardProps) {
           </span>
         )}
       </div>
+
+      <button className="product-card__add" type="button">
+        <span className="product-card__add-background" aria-hidden="true" />
+        <span className="product-card__add-content">
+          Add to bag
+          <svg
+            className="product-card__add-arrow"
+            viewBox="0 0 14 16"
+            aria-hidden="true"
+          >
+            <path d="M1 15 13 3M5 3h8v8" />
+          </svg>
+        </span>
+      </button>
+      <button className="product-card__details" type="button">View details</button>
     </article>
   )
 }

@@ -45,6 +45,14 @@ export interface Product {
   pricing: Pricing
   badges: Badge[]
   variationGroups: VariationGroup[]
+  categories: Category[]
+}
+
+export interface Category {
+  id: number
+  documentId: string
+  name: string
+  order: number
 }
 
 export interface ProductsResponse {
