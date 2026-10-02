@@ -413,6 +413,10 @@ body.catalog-modal-open .how-it-works {
   object-fit: cover;
 }
 
+.product-catalog .product-card__image--placeholder {
+  background: var(--neutral-200);
+}
+
 .product-catalog .product-card__badges {
   position: absolute;
   top: 4px;

@@ -67,11 +67,19 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <article className="product-card">
       <div className="product-card__image-wrapper">
-        <img
-          className="product-card__image"
-          src={`${STRAPI_URL}${product.image.url}`}
-          alt={product.image.alternativeText ?? product.name}
-        />
+        {product.image ? (
+          <img
+            className="product-card__image"
+            src={`${STRAPI_URL}${product.image.url}`}
+            alt={product.image.alternativeText ?? product.name}
+          />
+        ) : (
+          <div
+            className="product-card__image product-card__image--placeholder"
+            role="img"
+            aria-label={`Image for ${product.name} is unavailable`}
+          />
+        )}
 
         <div className="product-card__badges">
           {product.badges.map((badge) => (

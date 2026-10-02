@@ -41,7 +41,7 @@ export interface Product {
   size: string
   description: string | null
   order: number
-  image: ProductImage
+  image: ProductImage | null
   pricing: Pricing
   badges: Badge[]
   variationGroups: VariationGroup[]
