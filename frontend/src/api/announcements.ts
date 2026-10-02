@@ -1,3 +1,6 @@
+import { STRAPI_URL } from '../config'
+import { fetchWithRetry } from './fetchWithRetry'
+
 export interface AnnouncementMessage {
   id: number
   documentId: string
@@ -12,7 +15,7 @@ interface AnnouncementMessagesResponse {
 export async function getAnnouncementMessages(): Promise<
   AnnouncementMessage[]
 > {
-  const response = await fetch(
+  const response = await fetchWithRetry(
     `${STRAPI_URL}/api/announcement-messages?sort=order:asc`,
   )
 
@@ -26,4 +29,3 @@ export async function getAnnouncementMessages(): Promise<
 
   return result.data
 }
-import { STRAPI_URL } from '../config'

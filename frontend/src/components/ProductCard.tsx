@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Product } from '../types/product'
-import { STRAPI_URL } from '../config'
+import { MEDIA_URL } from '../config'
 
 interface ProductCardProps {
   product: Product
@@ -69,7 +69,7 @@ function ProductCard({ product }: ProductCardProps) {
       <div className="product-card__image-wrapper">
         <img
           className="product-card__image"
-          src={`${STRAPI_URL}${product.image.url}`}
+          src={`${MEDIA_URL}${product.image.url}`}
           alt={product.image.alternativeText ?? product.name}
         />
 
@@ -164,7 +164,7 @@ function ProductCard({ product }: ProductCardProps) {
                         {option.image && (
                           <img
                             className="product-card__option-image"
-                            src={`${STRAPI_URL}${option.image.url}`}
+                            src={`${MEDIA_URL}${option.image.url}`}
                             alt=""
                             aria-hidden="true"
                           />

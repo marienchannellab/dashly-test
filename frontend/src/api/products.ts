@@ -1,8 +1,9 @@
 import type { Category, ProductsResponse } from '../types/product'
 import { STRAPI_URL } from '../config'
+import { fetchWithRetry } from './fetchWithRetry'
 
 export async function getProducts(): Promise<ProductsResponse> {
-  const response = await fetch(
+  const response = await fetchWithRetry(
     `${STRAPI_URL}/api/products?populate[image]=true&populate[pricing]=true&populate[badges]=true&populate[categories]=true&populate[variationGroups][populate][options][populate][image]=true&sort=order:asc`,
   )
 
@@ -18,7 +19,7 @@ interface CategoriesResponse {
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const response = await fetch(
+  const response = await fetchWithRetry(
     `${STRAPI_URL}/api/categories?sort=order:asc`,
   )
 

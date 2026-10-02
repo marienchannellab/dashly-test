@@ -60,6 +60,8 @@ services:
         value: 22.14.0
       - key: VITE_STRAPI_URL
         value: https://dashly-strapi-marienchannellab.onrender.com
+      - key: VITE_MEDIA_URL
+        value: https://dashly-frontend-marienchannellab.onrender.com
     routes:
       - type: rewrite
         source: /*
