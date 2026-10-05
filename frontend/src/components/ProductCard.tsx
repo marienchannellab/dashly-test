@@ -29,7 +29,7 @@ function ResilientImage({
     <span className={`${className}-frame`}>
       {status !== 'loaded' && (
         <span
-          className={`${className} ${skeletonClassName} product-card__skeleton`}
+          className={`${skeletonClassName} product-card__skeleton`}
           role={decorative ? undefined : 'img'}
           aria-label={decorative ? undefined : `Image for ${alt}`}
           aria-hidden={decorative || undefined}
@@ -38,10 +38,11 @@ function ResilientImage({
 
       {status !== 'error' && (
         <img
-          className={`${className}${status === 'loading' ? ' product-card__image--loading' : ''}`}
+          className={className}
           src={src}
           alt={decorative ? '' : alt}
           aria-hidden={decorative || undefined}
+          style={{ visibility: status === 'loaded' ? 'visible' : 'hidden' }}
           onLoad={() => setStatus('loaded')}
           onError={() => setStatus('error')}
         />
@@ -121,7 +122,7 @@ function ProductCard({ product }: ProductCardProps) {
           />
         ) : (
           <div
-            className="product-card__image product-card__image--skeleton product-card__skeleton"
+            className="product-card__image--skeleton product-card__skeleton"
             role="img"
             aria-label={`Image for ${product.name} is unavailable`}
           />
