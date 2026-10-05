@@ -6,6 +6,50 @@ interface ProductCardProps {
   product: Product
 }
 
+interface ResilientImageProps {
+  src: string
+  alt: string
+  className: string
+  skeletonClassName: string
+  decorative?: boolean
+}
+
+function ResilientImage({
+  src,
+  alt,
+  className,
+  skeletonClassName,
+  decorative = false,
+}: ResilientImageProps) {
+  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>(
+    'loading',
+  )
+
+  return (
+    <span className={`${className}-frame`}>
+      {status !== 'loaded' && (
+        <span
+          className={`${className} ${skeletonClassName} product-card__skeleton`}
+          role={decorative ? undefined : 'img'}
+          aria-label={decorative ? undefined : `Image for ${alt}`}
+          aria-hidden={decorative || undefined}
+        />
+      )}
+
+      {status !== 'error' && (
+        <img
+          className={`${className}${status === 'loading' ? ' product-card__image--loading' : ''}`}
+          src={src}
+          alt={decorative ? '' : alt}
+          aria-hidden={decorative || undefined}
+          onLoad={() => setStatus('loaded')}
+          onError={() => setStatus('error')}
+        />
+      )}
+    </span>
+  )
+}
+
 const variationLabels: Record<string, string> = {
   Formula: 'Choose formula:',
   'Skin type': 'Skin type:',
@@ -68,14 +112,16 @@ function ProductCard({ product }: ProductCardProps) {
     <article className="product-card">
       <div className="product-card__image-wrapper">
         {product.image ? (
-          <img
-            className="product-card__image"
+          <ResilientImage
+            key={product.image.url}
             src={`${STRAPI_URL}${product.image.url}`}
             alt={product.image.alternativeText ?? product.name}
+            className="product-card__image"
+            skeletonClassName="product-card__image--skeleton"
           />
         ) : (
           <div
-            className="product-card__image product-card__image--placeholder"
+            className="product-card__image product-card__image--skeleton product-card__skeleton"
             role="img"
             aria-label={`Image for ${product.name} is unavailable`}
           />
@@ -170,11 +216,13 @@ function ProductCard({ product }: ProductCardProps) {
                         }
                       >
                         {option.image && (
-                          <img
-                            className="product-card__option-image"
+                          <ResilientImage
+                            key={option.image.url}
                             src={`${STRAPI_URL}${option.image.url}`}
                             alt=""
-                            aria-hidden="true"
+                            className="product-card__option-image"
+                            skeletonClassName="product-card__option-image--skeleton"
+                            decorative
                           />
                         )}
 
