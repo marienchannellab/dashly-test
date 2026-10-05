@@ -1166,9 +1166,13 @@ body.catalog-modal-open .how-it-works {
   }
 
   .step-card h3 .step-card__number {
-    height: 80px;
+    height: clamp(46px, 4.15vw, 60px);
     font-size: clamp(72px, 6.4vw, 92px);
     font-weight: 500;
+  }
+
+  .step-card__number > span {
+    transform: translateY(-6px);
   }
 
   .step-card__name {
