@@ -1075,7 +1075,10 @@ body.catalog-modal-open .how-it-works {
   }
 
   .steps {
-    --step-stack-header-height: calc(clamp(16px, 1.53vw, 22px) + 76px);
+    --step-title-height: clamp(42px, 3.5vw, 50px);
+    --step-stack-header-height: calc(
+      clamp(16px, 1.53vw, 22px) + var(--step-title-height) + 6px + 32px
+    );
 
     margin-bottom: -120px;
     padding-bottom: 0;
@@ -1162,7 +1165,7 @@ body.catalog-modal-open .how-it-works {
 
   .step-card h3 {
     align-items: flex-end;
-    height: 80px;
+    height: var(--step-title-height);
   }
 
   .step-card h3 .step-card__number {
@@ -1182,7 +1185,7 @@ body.catalog-modal-open .how-it-works {
 
   .step-card__tagline {
     font-size: 32px;
-    margin-top: 20px;
+    margin-top: 6px;
   }
 
   .step-card__description {
