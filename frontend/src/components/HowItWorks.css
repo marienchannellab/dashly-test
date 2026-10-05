@@ -1166,7 +1166,7 @@ body.catalog-modal-open .how-it-works {
   }
 
   .step-card h3 .step-card__number {
-    height: clamp(46px, 4.15vw, 60px);
+    height: clamp(34px, 2.8vw, 42px);
     font-size: clamp(72px, 6.4vw, 92px);
     font-weight: 500;
   }
