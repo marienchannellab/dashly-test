@@ -15,6 +15,16 @@
       "required": true,
       "min": 1
     },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "auto",
+        "vertical",
+        "horizontal"
+      ],
+      "required": true,
+      "default": "auto"
+    },
     "options": {
       "type": "component",
       "component": "product.variation-option",

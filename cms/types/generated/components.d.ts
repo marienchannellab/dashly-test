@@ -58,6 +58,9 @@ export interface ProductVariationGroup extends Struct.ComponentSchema {
     icon: 'oneToMany';
   };
   attributes: {
+    layout: Schema.Attribute.Enumeration<['auto', 'vertical', 'horizontal']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'auto'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     options: Schema.Attribute.Component<'product.variation-option', true>;
     order: Schema.Attribute.Integer &

@@ -57,14 +57,6 @@ function ResilientImage({
   )
 }
 
-const variationLabels: Record<string, string> = {
-  Formula: 'Choose formula:',
-  'Skin type': 'Skin type:',
-  Size: 'Size:',
-  'Set includes': 'Set includes:',
-  'Choose finish': 'Choose finish:',
-}
-
 function getInitialSelectedOptions(product: Product) {
   return product.variationGroups.reduce<Record<number, number>>(
     (selectedOptions, group) => {
@@ -80,6 +72,14 @@ function getInitialSelectedOptions(product: Product) {
     },
     {},
   )
+}
+
+function getVariationLayout(group: Product['variationGroups'][number]) {
+  if (group.layout === 'horizontal' || group.layout === 'vertical') {
+    return group.layout
+  }
+
+  return group.options.length > 2 ? 'horizontal' : 'vertical'
 }
 
 function ProductCard({
@@ -231,27 +231,9 @@ function ProductCard({
           .map((group) => (
             <div
               key={group.id}
-              className={`product-card__variation-group ${
-                group.name === 'Formula'
-                  ? 'product-card__variation-group--formula'
-                  : ''
-              } ${
-                ['Formula', 'Set includes', 'Choose finish'].includes(
-                  group.name,
-                )
-                  ? 'product-card__variation-group--stacked'
-                  : ''
-              } ${
-                group.name === 'Size'
-                  ? 'product-card__variation-group--size'
-                  : ''
-              } ${
-                group.name === 'Skin type'
-                  ? 'product-card__variation-group--skin-type'
-                  : ''
-              }`}
+              className={`product-card__variation-group product-card__variation-group--${getVariationLayout(group)}`}
             >
-              <p>{variationLabels[group.name] ?? `${group.name}:`}</p>
+              <p>{group.name}:</p>
 
               <div className="product-card__options">
                 {group.options

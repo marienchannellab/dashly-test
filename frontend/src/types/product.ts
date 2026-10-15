@@ -31,6 +31,7 @@ export interface VariationGroup {
   id: number
   name: string
   order: number
+  layout: 'auto' | 'vertical' | 'horizontal'
   options: VariationOption[]
 }
 
