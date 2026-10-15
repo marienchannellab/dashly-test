@@ -653,7 +653,7 @@ body.catalog-modal-open .how-it-works {
 }
 
 .product-card__variation-group--horizontal .product-card__option {
-  flex: 1 0 max-content;
+  flex: 1 1 60px;
   min-width: 0;
   max-width: 100%;
   width: auto;
