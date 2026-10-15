@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, type KeyboardEvent } from 'react'
 import type { Product } from '../types/product'
 import { STRAPI_URL } from '../config'
 
 interface ProductCardProps {
   product: Product
+  expanded?: boolean
+  onOpenDetails?: (product: Product) => void
 }
 
 interface ResilientImageProps {
@@ -76,7 +78,11 @@ function getInitialSelectedOptions(product: Product) {
   )
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({
+  product,
+  expanded = false,
+  onOpenDetails,
+}: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const [selectedOptions, setSelectedOptions] = useState<
@@ -123,9 +129,27 @@ function ProductCard({ product }: ProductCardProps) {
     }))
   }
 
+  const openDetails = () => onOpenDetails?.(product)
+
+  const openDetailsFromKeyboard = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      openDetails()
+    }
+  }
+
   return (
-    <article className="product-card">
-      <div className="product-card__image-wrapper">
+    <article
+      className={`product-card${expanded ? ' product-card--expanded' : ''}`}
+    >
+      <div
+        className={`product-card__image-wrapper${onOpenDetails ? ' product-card__detail-trigger' : ''}`}
+        role={onOpenDetails ? 'button' : undefined}
+        tabIndex={onOpenDetails ? 0 : undefined}
+        aria-label={onOpenDetails ? `View details for ${product.name}` : undefined}
+        onClick={onOpenDetails ? openDetails : undefined}
+        onKeyDown={onOpenDetails ? openDetailsFromKeyboard : undefined}
+      >
         {product.image ? (
           <ResilientImage
             key={product.image.url}
@@ -161,7 +185,10 @@ function ProductCard({ product }: ProductCardProps) {
               : `Add ${product.name} to favorites`
           }
           aria-pressed={isFavorite}
-          onClick={() => setIsFavorite((current) => !current)}
+          onClick={(event) => {
+            event.stopPropagation()
+            setIsFavorite((current) => !current)
+          }}
         >
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <path
@@ -172,10 +199,20 @@ function ProductCard({ product }: ProductCardProps) {
         </button>
       </div>
 
-      <div className="product-card__title-block">
+      <div
+        className={`product-card__title-block${onOpenDetails ? ' product-card__detail-trigger' : ''}`}
+        role={onOpenDetails ? 'button' : undefined}
+        tabIndex={onOpenDetails ? 0 : undefined}
+        onClick={onOpenDetails ? openDetails : undefined}
+        onKeyDown={onOpenDetails ? openDetailsFromKeyboard : undefined}
+      >
         <h2>{product.name}</h2>
         <p>{product.size}</p>
       </div>
+
+      {expanded && product.description && (
+        <p className="product-card__description">{product.description}</p>
+      )}
 
       <div className="product-card__variations">
         {product.variationGroups
@@ -289,7 +326,15 @@ function ProductCard({ product }: ProductCardProps) {
           </svg>
         </span>
       </button>
-      <button className="product-card__details" type="button">View details</button>
+      {!expanded && (
+        <button
+          className="product-card__details"
+          type="button"
+          onClick={openDetails}
+        >
+          View details
+        </button>
+      )}
     </article>
   )
 }

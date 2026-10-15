@@ -7,9 +7,16 @@ interface ProductCatalogProps {
   products: Product[]
   eyebrow?: string | null
   resetKey?: number | null
+  onProductOpen?: (product: Product) => void
 }
 
-function ProductCatalog({ categories, products, eyebrow, resetKey }: ProductCatalogProps) {
+function ProductCatalog({
+  categories,
+  products,
+  eyebrow,
+  resetKey,
+  onProductOpen,
+}: ProductCatalogProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     categories[0]?.id ?? null,
   )
@@ -107,7 +114,11 @@ function ProductCatalog({ categories, products, eyebrow, resetKey }: ProductCata
 
       <div className="product-catalog__track" ref={trackRef}>
         {visibleProducts.map((product) => (
-          <ProductCard key={product.documentId} product={product} />
+          <ProductCard
+            key={product.documentId}
+            product={product}
+            onOpenDetails={onProductOpen}
+          />
         ))}
 
         {visibleProducts.length === 0 && (

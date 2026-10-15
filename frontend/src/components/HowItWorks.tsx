@@ -7,6 +7,7 @@ import headingStar from '../assets/how-it-works-star.svg'
 import { getCategories, getProducts } from '../api/products'
 import type { Category, Product } from '../types/product'
 import ProductCatalog from './ProductCatalog'
+import MobileProductDetails from './MobileProductDetails'
 import './HowItWorks.css'
 
 const steps = [
@@ -59,6 +60,7 @@ function HowItWorks() {
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [catalogOpen, setCatalogOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [activeStep, setActiveStep] = useState<number | null>(() => (
     window.innerWidth >= 900 ? 0 : null
   ))
@@ -87,7 +89,13 @@ function HowItWorks() {
     document.body.classList.add('catalog-modal-open')
 
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setCatalogOpen(false)
+      if (event.key === 'Escape') {
+        if (selectedProduct) {
+          setSelectedProduct(null)
+        } else {
+          setCatalogOpen(false)
+        }
+      }
     }
 
     window.addEventListener('keydown', closeOnEscape)
@@ -97,7 +105,7 @@ function HowItWorks() {
       document.body.style.overflow = previousOverflow
       document.body.classList.remove('catalog-modal-open')
     }
-  }, [catalogOpen])
+  }, [catalogOpen, selectedProduct])
 
   useEffect(() => {
     const stack = stepsRef.current
@@ -260,6 +268,11 @@ function HowItWorks() {
     setCatalogOpen(true)
   }
 
+  function closeCatalog() {
+    setSelectedProduct(null)
+    setCatalogOpen(false)
+  }
+
   return (
     <section className="how-it-works" aria-labelledby="how-it-works-title">
       <header className="how-it-works__heading">
@@ -342,10 +355,14 @@ function HowItWorks() {
           className="catalog-modal"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="catalog-modal-title"
+          aria-labelledby={
+            selectedProduct
+              ? 'mobile-product-details-title'
+              : 'catalog-modal-title'
+          }
           onClick={(event) => {
             if (event.target === event.currentTarget && window.innerWidth >= 600) {
-              setCatalogOpen(false)
+              closeCatalog()
             }
           }}
         >
@@ -354,37 +371,50 @@ function HowItWorks() {
               className="catalog-modal__close"
               type="button"
               aria-label="Close products"
-              onClick={() => setCatalogOpen(false)}
+              onClick={closeCatalog}
             >
               <svg viewBox="0 0 14 14" aria-hidden="true">
                 <path d="M2 2l10 10M12 2 2 12" />
               </svg>
             </button>
-            <h2 id="catalog-modal-title">
-              {activeStep === null ? 'Shop products' : steps[activeStep].cta}
-            </h2>
-            {loading ? <p>Loading products…</p> : (
-              <ProductCatalog
-                categories={categories}
-                products={products}
-                eyebrow={null}
-                resetKey={activeStep}
+            <div
+              className="catalog-modal__catalog-view"
+              hidden={selectedProduct !== null}
+            >
+              <h2 id="catalog-modal-title">
+                {activeStep === null ? 'Shop products' : steps[activeStep].cta}
+              </h2>
+              {loading ? <p>Loading products…</p> : (
+                <ProductCatalog
+                  categories={categories}
+                  products={products}
+                  eyebrow={null}
+                  resetKey={activeStep}
+                  onProductOpen={setSelectedProduct}
+                />
+              )}
+              <p className="catalog-modal__label">Shop products for:</p>
+              <div className="catalog-modal__steps">
+                {steps.map((step, index) => (
+                  <button
+                    key={step.number}
+                    type="button"
+                    className={activeStep === index ? 'catalog-modal__step--active' : undefined}
+                    aria-pressed={activeStep === index}
+                    onClick={() => setActiveStep(index)}
+                  >
+                    <span>{step.number}</span> {step.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {selectedProduct && (
+              <MobileProductDetails
+                product={selectedProduct}
+                onBack={() => setSelectedProduct(null)}
               />
             )}
-            <p className="catalog-modal__label">Shop products for:</p>
-            <div className="catalog-modal__steps">
-              {steps.map((step, index) => (
-                <button
-                  key={step.number}
-                  type="button"
-                  className={activeStep === index ? 'catalog-modal__step--active' : undefined}
-                  aria-pressed={activeStep === index}
-                  onClick={() => setActiveStep(index)}
-                >
-                  <span>{step.number}</span> {step.name}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       )}
