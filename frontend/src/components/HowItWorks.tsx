@@ -8,6 +8,7 @@ import { getCategories, getProducts } from '../api/products'
 import type { Category, Product } from '../types/product'
 import ProductCatalog from './ProductCatalog'
 import MobileProductDetails from './MobileProductDetails'
+import type { ProductSelections } from './ProductCard'
 import './HowItWorks.css'
 
 const steps = [
@@ -61,6 +62,9 @@ function HowItWorks() {
   const [loading, setLoading] = useState(true)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [selectedOptionsByProduct, setSelectedOptionsByProduct] = useState<
+    Record<string, ProductSelections>
+  >({})
   const [activeStep, setActiveStep] = useState<number | null>(() => (
     window.innerWidth >= 900 ? 0 : null
   ))
@@ -273,6 +277,24 @@ function HowItWorks() {
     setCatalogOpen(false)
   }
 
+  function dismissCatalogLevel() {
+    if (selectedProduct) {
+      setSelectedProduct(null)
+      return
+    }
+    closeCatalog()
+  }
+
+  function updateProductSelections(
+    product: Product,
+    selectedOptions: ProductSelections,
+  ) {
+    setSelectedOptionsByProduct((current) => ({
+      ...current,
+      [product.documentId]: selectedOptions,
+    }))
+  }
+
   return (
     <section className="how-it-works" aria-labelledby="how-it-works-title">
       <header className="how-it-works__heading">
@@ -362,7 +384,7 @@ function HowItWorks() {
           }
           onClick={(event) => {
             if (event.target === event.currentTarget && window.innerWidth >= 600) {
-              closeCatalog()
+              dismissCatalogLevel()
             }
           }}
         >
@@ -370,8 +392,8 @@ function HowItWorks() {
             <button
               className="catalog-modal__close"
               type="button"
-              aria-label="Close products"
-              onClick={closeCatalog}
+              aria-label={selectedProduct ? 'Back to products' : 'Close products'}
+              onClick={dismissCatalogLevel}
             >
               <svg viewBox="0 0 14 14" aria-hidden="true">
                 <path d="M2 2l10 10M12 2 2 12" />
@@ -391,6 +413,8 @@ function HowItWorks() {
                   eyebrow={null}
                   resetKey={activeStep}
                   onProductOpen={setSelectedProduct}
+                  selectedOptionsByProduct={selectedOptionsByProduct}
+                  onSelectedOptionsChange={updateProductSelections}
                 />
               )}
               <p className="catalog-modal__label">Shop products for:</p>
@@ -413,6 +437,12 @@ function HowItWorks() {
               <MobileProductDetails
                 product={selectedProduct}
                 onBack={() => setSelectedProduct(null)}
+                selectedOptions={
+                  selectedOptionsByProduct[selectedProduct.documentId]
+                }
+                onSelectedOptionsChange={(selectedOptions) =>
+                  updateProductSelections(selectedProduct, selectedOptions)
+                }
               />
             )}
           </div>

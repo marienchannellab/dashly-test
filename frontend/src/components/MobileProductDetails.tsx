@@ -1,13 +1,21 @@
 import { useEffect, useRef } from 'react'
 import type { Product } from '../types/product'
 import ProductCard from './ProductCard'
+import type { ProductSelections } from './ProductCard'
 
 interface MobileProductDetailsProps {
   product: Product
   onBack: () => void
+  selectedOptions?: ProductSelections
+  onSelectedOptionsChange: (selectedOptions: ProductSelections) => void
 }
 
-function MobileProductDetails({ product, onBack }: MobileProductDetailsProps) {
+function MobileProductDetails({
+  product,
+  onBack,
+  selectedOptions,
+  onSelectedOptionsChange,
+}: MobileProductDetailsProps) {
   const backButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -35,7 +43,12 @@ function MobileProductDetails({ product, onBack }: MobileProductDetailsProps) {
       </header>
 
       <div className="product-catalog mobile-product-details__card">
-        <ProductCard product={product} expanded />
+        <ProductCard
+          product={product}
+          expanded
+          selectedOptions={selectedOptions}
+          onSelectedOptionsChange={onSelectedOptionsChange}
+        />
       </div>
     </section>
   )

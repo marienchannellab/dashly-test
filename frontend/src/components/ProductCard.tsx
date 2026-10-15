@@ -6,7 +6,11 @@ interface ProductCardProps {
   product: Product
   expanded?: boolean
   onOpenDetails?: (product: Product) => void
+  selectedOptions?: ProductSelections
+  onSelectedOptionsChange?: (selectedOptions: ProductSelections) => void
 }
+
+export type ProductSelections = Record<number, number>
 
 interface ResilientImageProps {
   src: string
@@ -82,12 +86,14 @@ function ProductCard({
   product,
   expanded = false,
   onOpenDetails,
+  selectedOptions: controlledSelectedOptions,
+  onSelectedOptionsChange,
 }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false)
 
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<number, number>
-  >(() => getInitialSelectedOptions(product))
+  const [localSelectedOptions, setLocalSelectedOptions] =
+    useState<ProductSelections>(() => getInitialSelectedOptions(product))
+  const selectedOptions = controlledSelectedOptions ?? localSelectedOptions
 
   const { mode, basePrice, discountPercent, salePrice } = product.pricing
 
@@ -123,10 +129,15 @@ function ProductCard({
     finalPrice < basePrice
 
   const handleOptionSelect = (groupId: number, optionId: number) => {
-    setSelectedOptions((current) => ({
-      ...current,
+    const nextSelectedOptions = {
+      ...selectedOptions,
       [groupId]: optionId,
-    }))
+    }
+
+    if (controlledSelectedOptions === undefined) {
+      setLocalSelectedOptions(nextSelectedOptions)
+    }
+    onSelectedOptionsChange?.(nextSelectedOptions)
   }
 
   const openDetails = () => onOpenDetails?.(product)

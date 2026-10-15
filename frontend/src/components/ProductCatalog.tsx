@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import ProductCard from './ProductCard'
+import type { ProductSelections } from './ProductCard'
 import type { Category, Product } from '../types/product'
 
 interface ProductCatalogProps {
@@ -8,6 +9,11 @@ interface ProductCatalogProps {
   eyebrow?: string | null
   resetKey?: number | null
   onProductOpen?: (product: Product) => void
+  selectedOptionsByProduct?: Record<string, ProductSelections>
+  onSelectedOptionsChange?: (
+    product: Product,
+    selectedOptions: ProductSelections,
+  ) => void
 }
 
 function ProductCatalog({
@@ -16,6 +22,8 @@ function ProductCatalog({
   eyebrow,
   resetKey,
   onProductOpen,
+  selectedOptionsByProduct,
+  onSelectedOptionsChange,
 }: ProductCatalogProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     categories[0]?.id ?? null,
@@ -118,6 +126,13 @@ function ProductCatalog({
             key={product.documentId}
             product={product}
             onOpenDetails={onProductOpen}
+            selectedOptions={selectedOptionsByProduct?.[product.documentId]}
+            onSelectedOptionsChange={
+              onSelectedOptionsChange
+                ? (selectedOptions) =>
+                    onSelectedOptionsChange(product, selectedOptions)
+                : undefined
+            }
           />
         ))}
 
