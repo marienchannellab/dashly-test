@@ -653,9 +653,11 @@ body.catalog-modal-open .how-it-works {
 }
 
 .product-card__variation-group--horizontal .product-card__option {
-  flex: 0 0 auto;
+  box-sizing: border-box;
+  flex: 0 0 max-content;
+  min-width: max-content;
   max-width: 100%;
-  width: max-content;
+  width: auto;
   height: 35px;
   padding: 6px 12px;
   white-space: nowrap;
@@ -663,10 +665,12 @@ body.catalog-modal-open .how-it-works {
 
 .product-card__variation-group--horizontal .product-card__option-label {
   flex: 0 0 auto;
+  min-width: max-content;
   overflow: visible;
   overflow-wrap: normal;
   line-height: 1;
   text-overflow: clip;
+  white-space: nowrap;
 }
 
 .product-card__option {
