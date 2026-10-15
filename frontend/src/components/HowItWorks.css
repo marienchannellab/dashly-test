@@ -647,19 +647,27 @@ body.catalog-modal-open .how-it-works {
 }
 
 .product-card__variation-group--horizontal .product-card__options {
+  flex-wrap: wrap;
   justify-content: flex-start;
   gap: 4px;
 }
 
 .product-card__variation-group--horizontal .product-card__option {
-  flex: 0 0 auto;
+  flex: 1 0 max-content;
+  min-width: 0;
+  max-width: 100%;
   width: auto;
+  height: auto;
+  min-height: 35px;
   padding: 6px 12px;
+  white-space: normal;
 }
 
 .product-card__variation-group--horizontal .product-card__option-label {
-  flex-shrink: 0;
+  flex: 0 1 auto;
   overflow: visible;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
   text-overflow: clip;
 }
 
