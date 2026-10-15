@@ -42,11 +42,9 @@ function ProductCatalog({
   const visibleProducts = useMemo(() => {
     if (activeCategoryId === null) return products
 
-    const productsInCategory = products.filter((product) =>
+    return products.filter((product) =>
       product.categories?.some((category) => category.id === activeCategoryId),
     )
-
-    return productsInCategory.length > 0 ? productsInCategory : products
   }, [activeCategoryId, products])
 
   useLayoutEffect(() => {
