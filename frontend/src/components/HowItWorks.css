@@ -1288,6 +1288,7 @@ body.catalog-modal-open .how-it-works {
   }
 
   .product-catalog__categories {
+    align-items: center;
     gap: 24px;
     width: 588px;
     max-width: calc(100% - 32px);
@@ -1299,6 +1300,9 @@ body.catalog-modal-open .how-it-works {
   }
 
   .product-catalog__categories button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
     height: 68px;
     padding: 24px 32px;
