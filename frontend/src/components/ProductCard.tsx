@@ -85,17 +85,31 @@ function ProductCard({ product }: ProductCardProps) {
 
   const { mode, basePrice, discountPercent, salePrice } = product.pricing
 
-  const finalPrice =
+  const productPrice =
     mode === 'percentage' && discountPercent != null
       ? basePrice * (1 - discountPercent / 100)
       : mode === 'fixed' && salePrice != null
         ? salePrice
         : basePrice
 
+  const variationPriceMultiplier = product.variationGroups.reduce(
+    (multiplier, group) => {
+      const selectedOption = group.options.find(
+        (option) => option.id === selectedOptions[group.id],
+      )
+      const optionDiscount = selectedOption?.discountPercent ?? 0
+
+      return multiplier * (1 - optionDiscount / 100)
+    },
+    1,
+  )
+
+  const finalPrice = productPrice * variationPriceMultiplier
+
   const calculatedDiscountPercent =
-    mode === 'fixed' && salePrice != null && salePrice < basePrice
-      ? Math.round(((basePrice - salePrice) / basePrice) * 100)
-      : discountPercent
+    finalPrice < basePrice
+      ? Math.round(((basePrice - finalPrice) / basePrice) * 100)
+      : null
 
   const hasDiscount =
     calculatedDiscountPercent != null &&
