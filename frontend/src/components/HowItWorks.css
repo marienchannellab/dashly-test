@@ -653,21 +653,19 @@ body.catalog-modal-open .how-it-works {
 }
 
 .product-card__variation-group--horizontal .product-card__option {
-  flex: 1 1 60px;
-  min-width: 0;
+  flex: 0 0 auto;
   max-width: 100%;
-  width: auto;
-  height: auto;
-  min-height: 35px;
+  width: max-content;
+  height: 35px;
   padding: 6px 12px;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .product-card__variation-group--horizontal .product-card__option-label {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   overflow: visible;
-  overflow-wrap: anywhere;
-  line-height: 1.2;
+  overflow-wrap: normal;
+  line-height: 1;
   text-overflow: clip;
 }
 
