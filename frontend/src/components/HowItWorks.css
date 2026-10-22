@@ -144,6 +144,10 @@ body.catalog-modal-open .how-it-works {
 }
 
 @media (max-width: 599px) {
+  .steps::after {
+    height: 405px;
+  }
+
   .step-card {
     border: 0;
     box-shadow:
