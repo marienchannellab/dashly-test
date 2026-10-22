@@ -388,7 +388,8 @@ body.catalog-modal-open .how-it-works {
     display: block;
     box-sizing: border-box;
     width: calc(100% + 24px);
-    margin-inline: -12px;
+    margin: -28px -12px;
+    padding-block: 28px;
     padding-inline: 28px;
     overflow-x: auto;
     scroll-padding-inline: 28px;
