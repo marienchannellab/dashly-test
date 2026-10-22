@@ -329,33 +329,37 @@ function HowItWorks() {
                 }
               }}
             >
-              <h3>
-                <span className="step-card__number" aria-label={step.number}>
-                  <span aria-hidden="true">{step.number}</span>
-                </span>
-                <span className="step-card__name">{step.name}</span>
-              </h3>
-              <p className="step-card__tagline">{step.tagline}</p>
-              <p className="step-card__description">{step.description}</p>
-              <button
-                type="button"
-                className="step-card__cta"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  if (window.innerWidth < 900) {
-                    openCatalog(index)
-                  } else {
-                    selectStep(index)
-                  }
-                }}
-              >
-                {step.cta}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path className="step-card__arrow-desktop" d="M6 18 18 6M7 6h11v11" />
-                  <path className="step-card__arrow-mobile" d="M2 12h20m-7-7 7 7-7 7" />
-                </svg>
-              </button>
-              <img src={step.image} alt={step.imageAlt} />
+              <div className="step-card__summary">
+                <h3>
+                  <span className="step-card__number" aria-label={step.number}>
+                    <span aria-hidden="true">{step.number}</span>
+                  </span>
+                  <span className="step-card__name">{step.name}</span>
+                </h3>
+                <p className="step-card__tagline">{step.tagline}</p>
+              </div>
+              <div className="step-card__body">
+                <p className="step-card__description">{step.description}</p>
+                <button
+                  type="button"
+                  className="step-card__cta"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (window.innerWidth < 900) {
+                      openCatalog(index)
+                    } else {
+                      selectStep(index)
+                    }
+                  }}
+                >
+                  {step.cta}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path className="step-card__arrow-desktop" d="M6 18 18 6M7 6h11v11" />
+                    <path className="step-card__arrow-mobile" d="M2 12h20m-7-7 7 7-7 7" />
+                  </svg>
+                </button>
+                <img src={step.image} alt={step.imageAlt} />
+              </div>
             </article>
           ))}
         </div>

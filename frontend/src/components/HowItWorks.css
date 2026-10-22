@@ -109,6 +109,8 @@ body.catalog-modal-open .how-it-works {
 }
 
 .step-card {
+  --step-card-background: #f5f7f6;
+
   position: sticky;
   top: 82px;
   z-index: 1;
@@ -117,7 +119,7 @@ body.catalog-modal-open .how-it-works {
   padding: 24px 18px 18px;
   border: 1px solid #bbded1;
   border-radius: 20px;
-  background: #f5f7f6;
+  background: var(--step-card-background);
   box-shadow: 0 12px 20px rgb(50 91 80 / 12%);
   cursor: pointer;
 }
@@ -144,14 +146,6 @@ body.catalog-modal-open .how-it-works {
 }
 
 @media (max-width: 899px) {
-  .steps {
-    --mobile-step-offset: clamp(96px, calc((100svh - 470px) / 3), 183px);
-  }
-
-  .steps::after {
-    height: 405px;
-  }
-
   .step-card {
     padding: 18px 18px 12px;
     border: 0;
@@ -160,27 +154,14 @@ body.catalog-modal-open .how-it-works {
       0 24px 58px rgb(49 70 62 / 10%);
   }
 
-  .step-card:nth-child(2) {
-    top: calc(82px + var(--mobile-step-offset));
-  }
-
-  .step-card:nth-child(3) {
-    top: calc(82px + var(--mobile-step-offset) + var(--mobile-step-offset));
-  }
-
-  .step-card:nth-child(4) {
-    top: calc(
-      82px + var(--mobile-step-offset) + var(--mobile-step-offset) + var(--mobile-step-offset)
-    );
-  }
 }
 
 .step-card--treat {
-  background: linear-gradient(135deg, #e4f8ef, #9fe4c1);
+  --step-card-background: linear-gradient(135deg, #e4f8ef, #9fe4c1);
 }
 
 .step-card--protect {
-  background: linear-gradient(135deg, #ffeaf5, #ffd2e8);
+  --step-card-background: linear-gradient(135deg, #ffeaf5, #ffd2e8);
 }
 
 .step-card h3 {
@@ -1576,5 +1557,76 @@ body.catalog-modal-open .how-it-works {
     width: 55%;
     height: 90px;
     margin-top: 10px;
+  }
+
+  .steps {
+    --mobile-step-peek: 126px;
+
+    isolation: isolate;
+  }
+
+  .steps::before {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: block;
+    height: 82px;
+    margin-bottom: -82px;
+    background: var(--neutral-100);
+    content: "";
+  }
+
+  .steps::after {
+    height: 140px;
+  }
+
+  .step-card {
+    display: contents;
+  }
+
+  .step-card__summary {
+    position: sticky;
+    top: 82px;
+    z-index: 1;
+    box-sizing: border-box;
+    height: var(--mobile-step-peek);
+    padding: 18px;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+    background: var(--step-card-background);
+    box-shadow: 0 -8px 28px rgb(49 70 62 / 10%);
+    cursor: pointer;
+  }
+
+  .step-card:nth-child(2) .step-card__summary {
+    top: calc(82px + var(--mobile-step-peek));
+    z-index: 2;
+  }
+
+  .step-card:nth-child(3) .step-card__summary {
+    top: calc(82px + var(--mobile-step-peek) + var(--mobile-step-peek));
+    z-index: 3;
+  }
+
+  .step-card:nth-child(4) .step-card__summary {
+    top: calc(
+      82px + var(--mobile-step-peek) + var(--mobile-step-peek) + var(--mobile-step-peek)
+    );
+    z-index: 4;
+  }
+
+  .step-card__body {
+    position: relative;
+    z-index: 0;
+    margin-bottom: 14px;
+    padding: 28px 18px 12px;
+    border-radius: 0 0 20px 20px;
+    background: var(--step-card-background);
+    box-shadow: 0 18px 32px rgb(49 70 62 / 10%);
+    cursor: pointer;
+  }
+
+  .step-card__body .step-card__description {
+    margin-top: 0;
   }
 }
