@@ -130,6 +130,11 @@ function HowItWorks() {
     }
 
     const unlockStack = () => {
+      if (!stack.classList.contains('steps--locked')) {
+        lockScrollY = null
+        return
+      }
+
       stack.classList.remove('steps--locked')
       stack.style.removeProperty('--stack-left')
       stack.style.removeProperty('--stack-width')
@@ -258,6 +263,63 @@ function HowItWorks() {
       window.cancelAnimationFrame(frame)
       window.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
+    }
+  }, [])
+
+  useEffect(() => {
+    const cards = stepRefs.current.filter((card): card is HTMLElement => Boolean(card))
+    if (cards.length !== steps.length) return
+
+    let frame = 0
+
+    const clearMobileShift = () => {
+      cards.forEach((card) => card.style.removeProperty('--mobile-card-shift'))
+    }
+
+    const updateMobileStack = () => {
+      frame = 0
+
+      if (window.innerWidth >= 900) {
+        clearMobileShift()
+        return
+      }
+
+      const measurements = cards.map((card) => {
+        const styles = getComputedStyle(card)
+        const appliedShift = Number.parseFloat(
+          styles.getPropertyValue('--mobile-card-shift'),
+        ) || 0
+        const stickyTop = Number.parseFloat(styles.top)
+        const naturalTop = card.getBoundingClientRect().top - appliedShift
+        return { card, naturalTop, stickyTop }
+      })
+      const lastCard = measurements.at(-1)
+      if (!lastCard || lastCard.naturalTop > lastCard.stickyTop + 2) {
+        clearMobileShift()
+        return
+      }
+
+      const stackShift = Math.min(0, lastCard.naturalTop - lastCard.stickyTop)
+      measurements.forEach(({ card, naturalTop, stickyTop }) => {
+        const naturalShift = Math.min(0, naturalTop - stickyTop)
+        card.style.setProperty('--mobile-card-shift', `${stackShift - naturalShift}px`)
+      })
+    }
+
+    const scheduleUpdate = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(updateMobileStack)
+    }
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
+    scheduleUpdate()
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
+      clearMobileShift()
     }
   }, [])
 

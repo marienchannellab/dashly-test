@@ -148,6 +148,10 @@ body.catalog-modal-open .how-it-works {
     --mobile-step-offset: clamp(96px, calc((100svh - 470px) / 3), 183px);
   }
 
+  .step-card {
+    transform: translateY(var(--mobile-card-shift, 0px));
+  }
+
   .steps::after {
     height: 405px;
   }
