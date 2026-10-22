@@ -145,7 +145,7 @@ body.catalog-modal-open .how-it-works {
 
 @media (max-width: 899px) {
   .steps {
-    --mobile-step-offset: clamp(96px, calc((100svh - 432px) / 3), 183px);
+    --mobile-step-offset: clamp(96px, calc((100svh - 470px) / 3), 183px);
   }
 
   .steps::after {
@@ -153,6 +153,7 @@ body.catalog-modal-open .how-it-works {
   }
 
   .step-card {
+    padding: 18px 18px 12px;
     border: 0;
     box-shadow:
       0 0 32px rgb(49 70 62 / 13%),
@@ -252,7 +253,7 @@ body.catalog-modal-open .how-it-works {
 
 @media (max-width: 899px) {
   .step-card h3 .step-card__number {
-    height: 60px;
+    height: 52px;
   }
 
   .step-card__number > span {
@@ -260,8 +261,8 @@ body.catalog-modal-open .how-it-works {
   }
 
   .step-card__tagline {
-    margin-top: 12px;
-    font-size: 32px;
+    margin-top: 8px;
+    font-size: 28px;
   }
 }
 
@@ -302,6 +303,7 @@ body.catalog-modal-open .how-it-works {
 
 @media (max-width: 899px) {
   .step-card__cta {
+    margin-top: 18px;
     padding-bottom: 0;
     border-bottom: 0;
     font-family: Manrope, sans-serif;
@@ -1572,6 +1574,7 @@ body.catalog-modal-open .how-it-works {
 @media (max-width: 899px) {
   .step-card img {
     width: 55%;
-    height: 132px;
+    height: 90px;
+    margin-top: 10px;
   }
 }
