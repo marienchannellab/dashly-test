@@ -75,11 +75,15 @@ body.catalog-modal-open .how-it-works {
     letter-spacing: 0;
   }
 
+  .how-it-works__heading strong {
+    font-weight: 400;
+  }
+
   .how-it-works__heading p {
     color: #555957;
     font-family: Manrope, sans-serif;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.2;
     letter-spacing: 0;
     text-align: center;
