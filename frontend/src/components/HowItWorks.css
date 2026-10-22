@@ -399,6 +399,16 @@ body.catalog-modal-open .how-it-works {
   .catalog-modal .product-catalog__categories-viewport::-webkit-scrollbar {
     display: none;
   }
+
+  .catalog-modal .product-catalog__track {
+    box-sizing: border-box;
+    width: calc(100% + 24px);
+    margin-right: -12px;
+    margin-left: -12px;
+    padding-right: 34px;
+    padding-left: 34px;
+    scroll-padding-inline: 34px;
+  }
 }
 
 @media (hover: hover) {
