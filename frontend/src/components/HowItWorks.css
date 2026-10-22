@@ -369,17 +369,15 @@ body.catalog-modal-open .how-it-works {
   }
 
   .catalog-modal .product-catalog__categories {
-    position: relative;
-    z-index: 1;
     box-sizing: border-box;
-    width: 100%;
+    width: max-content;
+    max-width: none;
     margin: 0;
-    padding-right: 34px;
-    padding-left: 34px;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    scroll-padding-inline: 34px;
+    padding: 5px;
+    overflow: visible;
+    border-radius: 40px;
+    background: var(--neutral-100);
+    box-shadow: 0 8px 18px rgb(45 76 68 / 14%);
   }
 
   .catalog-modal .product-catalog__categories button {
@@ -387,25 +385,18 @@ body.catalog-modal-open .how-it-works {
   }
 
   .catalog-modal .product-catalog__categories-viewport {
-    position: relative;
     display: block;
+    box-sizing: border-box;
     width: calc(100% + 24px);
     margin-inline: -12px;
+    padding-inline: 28px;
+    overflow-x: auto;
+    scroll-padding-inline: 28px;
+    scrollbar-width: none;
   }
 
-  .catalog-modal .product-catalog__categories-viewport::before {
-    position: absolute;
-    inset: 0 0 0 28px;
-    border-radius: 40px 0 0 40px;
-    background: var(--neutral-100);
-    box-shadow: 0 8px 18px rgb(45 76 68 / 14%);
-    content: "";
-    pointer-events: none;
-  }
-
-  .catalog-modal .product-catalog__categories-viewport--at-end::before {
-    right: 28px;
-    border-radius: 40px;
+  .catalog-modal .product-catalog__categories-viewport::-webkit-scrollbar {
+    display: none;
   }
 }
 

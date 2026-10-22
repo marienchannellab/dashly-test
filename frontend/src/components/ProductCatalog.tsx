@@ -28,8 +28,6 @@ function ProductCatalog({
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     categories[0]?.id ?? null,
   )
-  const [categoriesAtEnd, setCategoriesAtEnd] = useState(false)
-  const categoriesRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const activeCategoryId = categories.some(
     (category) => category.id === selectedCategoryId,
@@ -40,31 +38,6 @@ function ProductCatalog({
   useEffect(() => {
     if (trackRef.current) trackRef.current.scrollLeft = 0
   }, [activeCategoryId, resetKey])
-
-  useLayoutEffect(() => {
-    const categoryTrack = categoriesRef.current
-    if (!categoryTrack) return
-
-    const updateScrollPosition = () => {
-      const remainingScroll =
-        categoryTrack.scrollWidth -
-        categoryTrack.clientWidth -
-        categoryTrack.scrollLeft
-      setCategoriesAtEnd(remainingScroll <= 1)
-    }
-
-    updateScrollPosition()
-    categoryTrack.addEventListener('scroll', updateScrollPosition, {
-      passive: true,
-    })
-    const resizeObserver = new ResizeObserver(updateScrollPosition)
-    resizeObserver.observe(categoryTrack)
-
-    return () => {
-      categoryTrack.removeEventListener('scroll', updateScrollPosition)
-      resizeObserver.disconnect()
-    }
-  }, [categories])
 
   const visibleProducts = useMemo(() => {
     if (activeCategoryId === null) return products
@@ -129,15 +102,8 @@ function ProductCatalog({
       )}
 
       {categories.length > 0 && (
-        <div
-          className={`product-catalog__categories-viewport${
-            categoriesAtEnd
-              ? ' product-catalog__categories-viewport--at-end'
-              : ''
-          }`}
-        >
+        <div className="product-catalog__categories-viewport">
           <div
-            ref={categoriesRef}
             className="product-catalog__categories"
             role="tablist"
             aria-label="Product categories"
