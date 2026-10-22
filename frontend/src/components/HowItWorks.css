@@ -1246,8 +1246,14 @@ body.catalog-modal-open .how-it-works {
   order: 2;
 }
 
-@media (max-width: 599px) {
-  .catalog-modal__panel > .product-catalog {
+@media (max-width: 899px) {
+  .catalog-modal__catalog-view {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+  }
+
+  .catalog-modal__catalog-view > .product-catalog {
     flex: 0 0 auto;
   }
 
