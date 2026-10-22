@@ -150,6 +150,18 @@ body.catalog-modal-open .how-it-works {
       0 0 32px rgb(49 70 62 / 13%),
       0 24px 58px rgb(49 70 62 / 10%);
   }
+
+  .step-card:nth-child(2) {
+    top: calc(82px + 125px);
+  }
+
+  .step-card:nth-child(3) {
+    top: calc(82px + 250px);
+  }
+
+  .step-card:nth-child(4) {
+    top: calc(82px + 375px);
+  }
 }
 
 .step-card--treat {
@@ -225,6 +237,16 @@ body.catalog-modal-open .how-it-works {
   .step-card__tagline {
     margin-top: 12px;
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 599px) {
+  .step-card h3 .step-card__number {
+    height: 60px;
+  }
+
+  .step-card__number > span {
+    transform: translateY(-8px);
   }
 }
 
