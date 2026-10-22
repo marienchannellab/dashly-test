@@ -144,6 +144,10 @@ body.catalog-modal-open .how-it-works {
 }
 
 @media (max-width: 599px) {
+  .steps {
+    --mobile-step-offset: clamp(56px, calc((100svh - 550px) / 3), 125px);
+  }
+
   .steps::after {
     height: 405px;
   }
@@ -156,15 +160,17 @@ body.catalog-modal-open .how-it-works {
   }
 
   .step-card:nth-child(2) {
-    top: calc(82px + 125px);
+    top: calc(82px + var(--mobile-step-offset));
   }
 
   .step-card:nth-child(3) {
-    top: calc(82px + 250px);
+    top: calc(82px + var(--mobile-step-offset) + var(--mobile-step-offset));
   }
 
   .step-card:nth-child(4) {
-    top: calc(82px + 375px);
+    top: calc(
+      82px + var(--mobile-step-offset) + var(--mobile-step-offset) + var(--mobile-step-offset)
+    );
   }
 }
 
