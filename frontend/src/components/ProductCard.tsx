@@ -1,6 +1,5 @@
 import { useState, type KeyboardEvent } from 'react'
 import type { Product } from '../types/product'
-import { STRAPI_URL } from '../config'
 
 interface ProductCardProps {
   product: Product
@@ -164,7 +163,7 @@ function ProductCard({
         {product.image ? (
           <ResilientImage
             key={product.image.url}
-            src={`${STRAPI_URL}${product.image.url}`}
+            src={product.image.url}
             alt={product.image.alternativeText ?? product.name}
             className="product-card__image"
             skeletonClassName="product-card__image--skeleton"
@@ -263,7 +262,7 @@ function ProductCard({
                         {option.image && (
                           <ResilientImage
                             key={option.image.url}
-                            src={`${STRAPI_URL}${option.image.url}`}
+                            src={option.image.url}
                             alt=""
                             className="product-card__option-image"
                             skeletonClassName="product-card__option-image--skeleton"

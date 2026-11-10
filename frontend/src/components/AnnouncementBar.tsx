@@ -1,27 +1,11 @@
 import { useEffect, useState } from 'react'
-import {
-  getAnnouncementMessages,
-  type AnnouncementMessage,
-} from '../api/announcements'
+import { announcementMessages } from '../data/catalog'
 
 const MESSAGE_DURATION = 4000
 
 function AnnouncementBar() {
-  const [messages, setMessages] = useState<AnnouncementMessage[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
-
-  useEffect(() => {
-    async function loadMessages() {
-      try {
-        const data = await getAnnouncementMessages()
-        setMessages(data)
-      } catch (error) {
-        console.error('Failed to load announcement messages:', error)
-      }
-    }
-
-    loadMessages()
-  }, [])
+  const messages = announcementMessages
 
   useEffect(() => {
     if (messages.length <= 1) {

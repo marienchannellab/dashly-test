@@ -4,8 +4,8 @@ import treatmentImage from '../assets/skincare-treatment-routine.webp'
 import moisturisingImage from '../assets/skincare-moisturising-routine.webp'
 import protectionImage from '../assets/skincare-sun-protection.webp'
 import headingStar from '../assets/how-it-works-star.svg'
-import { getCategories, getProducts } from '../api/products'
-import type { Category, Product } from '../types/product'
+import { categories, products } from '../data/catalog'
+import type { Product } from '../types/product'
 import ProductCatalog from './ProductCatalog'
 import MobileProductDetails from './MobileProductDetails'
 import type { ProductSelections } from './ProductCard'
@@ -57,9 +57,6 @@ const steps = [
 const DESKTOP_STACK_BOTTOM_GAP = 96
 
 function HowItWorks() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
-  const [loading, setLoading] = useState(true)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [selectedOptionsByProduct, setSelectedOptionsByProduct] = useState<
@@ -74,17 +71,6 @@ function HowItWorks() {
   const stepsRef = useRef<HTMLDivElement>(null)
   const stepRefs = useRef<Array<HTMLElement | null>>([])
   const desktopCatalogRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    getProducts()
-      .then((response) => setProducts(response.data))
-      .catch((error) => console.error('Failed to load products:', error))
-      .finally(() => setLoading(false))
-
-    getCategories()
-      .then(setCategories)
-      .catch((error) => console.error('Failed to load categories:', error))
-  }, [])
 
   useEffect(() => {
     if (!catalogOpen) return
@@ -423,14 +409,12 @@ function HowItWorks() {
         </div>
 
         <div className="how-it-works__desktop-catalog" ref={desktopCatalogRef}>
-          {loading ? <p>Loading products…</p> : (
-            <ProductCatalog
-              categories={categories}
-              products={products}
-              eyebrow={selectedStep === null ? 'Shop products' : steps[selectedStep].cta}
-              resetKey={activeStep}
-            />
-          )}
+          <ProductCatalog
+            categories={categories}
+            products={products}
+            eyebrow={selectedStep === null ? 'Shop products' : steps[selectedStep].cta}
+            resetKey={activeStep}
+          />
         </div>
       </div>
 
@@ -468,17 +452,15 @@ function HowItWorks() {
               <h2 id="catalog-modal-title">
                 {activeStep === null ? 'Shop products' : steps[activeStep].cta}
               </h2>
-              {loading ? <p>Loading products…</p> : (
-                <ProductCatalog
-                  categories={categories}
-                  products={products}
-                  eyebrow={null}
-                  resetKey={activeStep}
-                  onProductOpen={setSelectedProduct}
-                  selectedOptionsByProduct={selectedOptionsByProduct}
-                  onSelectedOptionsChange={updateProductSelections}
-                />
-              )}
+              <ProductCatalog
+                categories={categories}
+                products={products}
+                eyebrow={null}
+                resetKey={activeStep}
+                onProductOpen={setSelectedProduct}
+                selectedOptionsByProduct={selectedOptionsByProduct}
+                onSelectedOptionsChange={updateProductSelections}
+              />
               <p className="catalog-modal__label">Shop products for:</p>
               <div className="catalog-modal__steps">
                 {steps.map((step, index) => (

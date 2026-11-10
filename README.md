@@ -1,6 +1,6 @@
 # LUMEA Skincare — Dashly Studio Test Assignment
 
-Responsive Home Page fragment built from the supplied Figma design. The project contains a React frontend and a Strapi CMS backed by PostgreSQL.
+Responsive Home Page fragment built from the supplied Figma design. The deployed React frontend uses local catalog data and assets, so it runs independently from the included Strapi project.
 
 ## Live deployment
 
@@ -58,22 +58,15 @@ In a second terminal:
 
 ```bash
 cd frontend
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-The default frontend URL is [http://localhost:5173](http://localhost:5173). `VITE_STRAPI_URL` must point to the running Strapi instance:
-
-```env
-VITE_STRAPI_URL=http://localhost:1337
-```
+The default frontend URL is [http://localhost:5173](http://localhost:5173). Product, category and announcement data is stored in `frontend/src/data/catalog.ts`; product media is bundled with the frontend.
 
 ## Production configuration
 
 ### Frontend
-
-Set `VITE_STRAPI_URL=https://your-strapi-host.example.com` on the frontend hosting provider.
 
 Build command:
 
@@ -110,6 +103,6 @@ cd ../cms
 npm run build
 ```
 
-## CMS-managed content
+## Content
 
-Strapi manages announcement messages, products, product images, pricing, discounts, badges, variation groups, variation values, categories, category order and product-category relationships. The Hero content and the four skincare Step Cards are intentionally static, as required by the assignment.
+The deployed frontend keeps announcement messages, products, product images, pricing, discounts, badges, variation groups, variation values, categories, category order and product-category relationships in local typed data. The Strapi project remains in the repository as the original CMS implementation, but the frontend no longer requests data or media from it at runtime.
