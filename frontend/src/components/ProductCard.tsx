@@ -117,9 +117,12 @@ function ProductCard({
 
   const finalPrice = productPrice * variationPriceMultiplier
 
+  const hasVariationDiscount = variationPriceMultiplier < 1
   const calculatedDiscountPercent =
     finalPrice < basePrice
-      ? Math.round(((basePrice - finalPrice) / basePrice) * 100)
+      ? hasVariationDiscount
+        ? Math.round(((basePrice - finalPrice) / basePrice) * 100)
+        : discountPercent ?? Math.round(((basePrice - finalPrice) / basePrice) * 100)
       : null
 
   const hasDiscount =

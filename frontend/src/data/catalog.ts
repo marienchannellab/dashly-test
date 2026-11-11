@@ -122,7 +122,7 @@ export const products: Product[] = [
     description: 'A simple three-step routine with cleansing, treatment and hydration essentials.',
     order: 4,
     image: image(4, 'cleanse-treat-hydrate.webp', cleanseTreatHydrateImage, 'Cleanse, treat and hydrate skincare set'),
-    pricing: { mode: 'percentage', basePrice: 65, discountPercent: 15, salePrice: null },
+    pricing: { mode: 'fixed', basePrice: 65, discountPercent: 15, salePrice: 52 },
     badges: [
       { id: 5, label: 'New' },
       { id: 6, label: 'Sale' },
@@ -136,25 +136,17 @@ export const products: Product[] = [
         options: [
           {
             id: 11,
-            value: 'Daily essentials',
+            value: 'Cleanser + Serum + Cream',
             order: 1,
             discountPercent: null,
             image: image(6, 'set-includes.webp', setIncludesImage, 'Products included in the set'),
           },
-        ],
-      },
-      {
-        id: 6,
-        name: 'Finish',
-        order: 2,
-        layout: 'horizontal',
-        options: [
           {
             id: 12,
-            value: 'Natural glow',
-            order: 1,
+            value: 'Cleanser + Serum + SPF',
+            order: 2,
             discountPercent: null,
-            image: image(7, 'choose-finish.webp', chooseFinishImage, 'Natural skincare finish'),
+            image: image(6, 'set-includes.webp', setIncludesImage, 'Products included in the set'),
           },
         ],
       },
@@ -169,9 +161,32 @@ export const products: Product[] = [
     description: 'Daily SPF that helps protect skin from UV damage while maintaining comfortable hydration.',
     order: 5,
     image: image(5, 'daily-sun-protection.webp', dailySunProtectionImage, 'Daily Sun Protection'),
-    pricing: { mode: 'fixed', basePrice: 26, discountPercent: null, salePrice: 22 },
+    pricing: { mode: 'fixed', basePrice: 26, discountPercent: 15, salePrice: 22 },
     badges: [{ id: 7, label: 'Bestseller' }],
-    variationGroups: [],
+    variationGroups: [
+      {
+        id: 6,
+        name: 'Choose finish',
+        order: 1,
+        layout: 'vertical',
+        options: [
+          {
+            id: 13,
+            value: 'Invisible Finish',
+            order: 1,
+            discountPercent: null,
+            image: image(7, 'choose-finish.webp', chooseFinishImage, 'Invisible sunscreen finish'),
+          },
+          {
+            id: 14,
+            value: 'Tinted Finish',
+            order: 2,
+            discountPercent: null,
+            image: image(7, 'choose-finish.webp', chooseFinishImage, 'Tinted sunscreen finish'),
+          },
+        ],
+      },
+    ],
     categories: [cleansers],
   },
 ]
